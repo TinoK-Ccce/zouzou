@@ -3,84 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Site avec Onglets</title>
+    <title>Mon Site avec Menu Hamburger</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        body, html {
+            height: 100%;
             margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
         }
-        .tab {
-            cursor: pointer;
-            padding: 10px 20px;
-            background-color: #ddd;
-            border: none;
-            outline: none;
-            transition: background-color 0.3s;
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
         }
-        .tab:hover {
-            background-color: #ccc;
-        }
-        .tab-content {
-            display: none;
-            padding: 20px;
-            border: 1px solid #aaa;
-            border-top: none;
-            width: 90%;
-        }
-        .active-tab {
+        .navbar a {
+            float: left;
             display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
         }
-        .active {
-            background-color: #fff;
-            border: 1px solid #aaa;
-            border-bottom: none;
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .content {
+            padding: 16px;
+            padding-top: 60px;
+            height: calc(100% - 60px); /* Adjust content height */
+            overflow: auto;
+        }
+        .content h3 {
+            color: #333;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 52px;
+            width: 100%;
+            left: 0;
+            z-index: 1;
+        }
+        @media screen and (max-width: 600px) {
+            .navbar a {display: none;}
+            .navbar a.icon {
+                float: right;
+                display: block;
+            }
+            .navbar.responsive {position: relative;}
+            .navbar.responsive .icon {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .navbar.responsive a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
-    <div>
-        <button class="tab" onclick="openTab(event, 'Tab1')">Onglet 1</button>
-        <button class="tab" onclick="openTab(event, 'Tab2')">Onglet 2</button>
-        <button class="tab" onclick="openTab(event, 'Tab3')">Onglet 3</button>
 
-        <div id="Tab1" class="tab-content">
-            <h3>Onglet 1</h3>
-            <p>Ceci est le contenu de l'Onglet 1.</p>
-        </div>
-        <div id="Tab2" class="tab-content">
-            <h3>Onglet 2</h3>
-            <p>Ceci est le contenu de l'Onglet 2.</p>
-        </div>
-        <div id="Tab3" class="tab-content">
-            <h3>Onglet 3</h3>
-            <p>Ceci est le contenu de l'Onglet 3.</p>
-        </div>
+<div class="navbar" id="myNavbar">
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        &#9776;
+    </a>
+    <div class="menu">
+        <a href="javascript:void(0);" onclick="openTab(event, 'Tab1')">Onglet 1</a>
+        <a href="javascript:void(0);" onclick="openTab(event, 'Tab2')">Onglet 2</a>
+        <a href="javascript:void(0);" onclick="openTab(event, 'Tab3')">Onglet 3</a>
     </div>
+</div>
 
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-        // Open the first tab by default
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementsByClassName('tab')[0].click();
-        });
-    </script>
+<div class="content">
+    <div id="Tab1" class="tab-content" style="display:none;">
+        <h3>Onglet 1</h3>
+        <p>Ceci est le contenu de l'Onglet 1.</p>
+    </div>
+    <div id="Tab2" class="tab-content" style="display:none;">
+        <h3>Onglet 2</h3>
+        <p>Ceci est le contenu de l'Onglet 2.</p>
+    </div>
+    <div id="Tab3" class="tab-content" style="display:none;">
+        <h3>Onglet 3</h3>
+        <p>Ceci est le contenu de l'Onglet 3.</p>
+    </div>
+</div>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myNavbar");
+    if (x.className === "navbar") {
+        x.className += " responsive";
+    } else {
+        x.className = "navbar";
+    }
+}
+function openTab(evt, tabName) {
+    var i, tabcontent;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementsByClassName('menu')[0].getElementsByTagName('a')[0].click();
+});
+</script>
+
 </body>
 </html>
