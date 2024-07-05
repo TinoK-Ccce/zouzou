@@ -33,7 +33,7 @@ body, html {
     overflow: auto;
 }
 .content h3 {
-    color: #333;
+    color: white;
 }
 .menu {
     display: none;
